@@ -1,0 +1,41 @@
+{%  extends 'base.html' %}
+
+{% block title %}
+{{ ememergy_item.title }} || {{ block.super}}
+{% endblock%}
+
+{% block sidebar %}{% include 'inc/_sidebar.html' %}{% endblock%}
+
+{% block content %}
+
+
+    <div class="card mb-3" xmlns="http://www.w3.org/1999/html">
+    <div class="card-header">
+          Категория : <a href="{{ememergy_item.category.get_absolute_url}}"> {{ ememergy_item.category }}</a>
+    </div>
+    <div class="row">
+        <div class="card-body">
+
+        <div class="media">
+            {% if ememergy_item.photo %}
+            <img src="{{item.photo.url}}"  width="350" class="mr-3">
+            {% else %}
+            <img src="https://picsum.fotos/id/1060/350/300/?blur=2" alt="" width="350" class="mr-2">
+            {% endif %}
+        </div>
+            <div class="media.body">
+               <h5 class="card-title">{{ ememergy_item.title }}</h5>
+                <p class="card-text">{{ ememergy_item.content }}</p>
+            </div>
+            </div>
+    </div>
+
+    <div class="card-footer text-muted">
+        {{ ememergy_item.created_at|date:"Y-m-d H:i" }}
+    </div>
+    </div>
+
+    {% endblock%}
+
+
+

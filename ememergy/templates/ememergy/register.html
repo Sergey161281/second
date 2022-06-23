@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}!!!ХРЕНЬ НИКОМУ НЕНУЖНАЯ!!!{% endblock%}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static '/css/style.css'%}">
+
+  </head>
+  <body>
+  {% include 'inc/_navbar.html' %}
+
+  <div class="container mt-3">
+
+    <div class="row">
+      <div class="col-md-3">
+        {% block sidebar %}{% include 'inc/_sidebar.html' %}{% endblock%}
+      </div>
+      <div class="col-md-9">
+
+          {% block content %}
+          <h1>РЕХУЕСТРАЦИЯ</h1>
+          <form  method="post">
+           {% csrf_token %}
+           {{ form.as_p }}
+              <button type="submit" class="btn-block">Зарехуестрироваться</button>
+          </form>
+
+
+
+        {% endblock %}
+
+          {% if page_obj.has_other_pages %}
+            <nav aria-label="...">
+  <ul class="pagination">
+      {% if page_obj.has_previous%}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">А перед этим...</a></li>
+      {% endif %}
+
+      {% for p in page_obj.paginator.page_range %}
+       {% if page_obj.number == p %}
+       <li class="page-item active" aria-current="page">
+         <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+       </li>
+       {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3  %}
+       <li class="page-item">
+         <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+       </li>
+      {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Что дальше было</a></li>
+      {% endif %}
+
+  </ul>
+</nav>
+          {% endif %}
+  </div>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+
+  </body>
+
+</html>
